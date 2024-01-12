@@ -5,7 +5,7 @@ namespace BlazorAppCatalogo.Shared.Models;
 
 public class Produto
 {
-    public int ProdutoId { get; set; }
+    public int Id { get; set; }
 
     [MaxLength(100)]
     public string? Nome { get; set; }

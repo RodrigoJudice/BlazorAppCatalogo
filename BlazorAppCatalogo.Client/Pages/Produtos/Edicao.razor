@@ -36,7 +36,7 @@
                 <option value="0">Selecione uma categoria</option>
                 @foreach (var categoria in Categorias)
                 {
-                    <option value="@categoria.CategoriaId">@categoria.Nome</option>
+                    <option value="@categoria.Id">@categoria.Nome</option>
                 }
             </InputSelect>
             <ValidationMessage For="@(() => Produto.CategoriaId)" />

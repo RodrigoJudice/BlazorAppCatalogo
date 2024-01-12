@@ -4,6 +4,7 @@ using BlazorAppCatalogo.Shared.Models;
 using BlazorAppCatalogo.Shared.Recursos;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging; // Add this namespace
 
 namespace BlazorAppCatalogo.Server.Controller
 {
@@ -12,20 +13,22 @@ namespace BlazorAppCatalogo.Server.Controller
     public class ProdutosController : ControllerBase
     {
         private readonly AppDbContext _context;
+        private readonly ILogger<ProdutosController> _logger; // Add logger field
 
-        public ProdutosController(AppDbContext context)
+        public ProdutosController(AppDbContext context, ILogger<ProdutosController> logger) // Add logger parameter in constructor
         {
             _context = context;
+            _logger = logger;
         }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Produto>>> Get(
-            [FromQuery] Paginacao paginacao,
-            [FromQuery] string nome = "")
+                    [FromQuery] Paginacao paginacao,
+                    [FromQuery] string nome = "")
         {
             var queryable = _context.Produtos.AsQueryable();
 
-            queryable = queryable.OrderBy(p => p.ProdutoId);
+            queryable = queryable.OrderBy(p => p.Id);
 
             if (!string.IsNullOrEmpty(nome))
             {
@@ -41,16 +44,19 @@ namespace BlazorAppCatalogo.Server.Controller
         [HttpGet("{id}", Name = "GetProduto")]
         public async Task<ActionResult<Produto>> Get(int id)
         {
-            return await _context.Produtos.AsNoTracking().FirstOrDefaultAsync(x => x.ProdutoId == id) ?? new Produto();
+            return await _context.Produtos.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id) ?? new Produto();
         }
 
         [HttpPost]
         public async Task<ActionResult<Produto>> Post(Produto produto)
         {
+            _logger.LogInformation("Novo produto cadastrado");
+            _logger.LogInformation($"Produto: {produto.Nome}");
+            _logger.LogInformation($"Produto: {produto.CategoriaId}");
             _context.Add(produto);
             await _context.SaveChangesAsync();
             return new CreatedAtRouteResult("GetProduto",
-                new { id = produto.ProdutoId }, produto);
+                new { id = produto.Id }, produto);
         }
 
         [HttpPut]
@@ -64,7 +70,7 @@ namespace BlazorAppCatalogo.Server.Controller
         [HttpDelete("{id}")]
         public async Task<ActionResult<Produto>> Delete(int id)
         {
-            var produto = new Produto { ProdutoId = id };
+            var produto = new Produto { Id = id };
             _context.Remove(produto);
             await _context.SaveChangesAsync();
             return Ok();

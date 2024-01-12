@@ -51,6 +51,7 @@ namespace BlazorAppCatalogo.Client.Pages.Produtos
         }
         protected async Task SalvarProduto()
         {
+
             try
             {
                 if (Id == 0)

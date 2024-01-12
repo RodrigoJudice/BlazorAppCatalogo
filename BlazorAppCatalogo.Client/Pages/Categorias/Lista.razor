@@ -47,13 +47,13 @@ else
                     <td>@categoria.Descricao</td>
                     <td>
                         <a class="btn btn-primary"
-                           @onclick="@(() => _navigation!.NavigateTo($"categorias/editar/{categoria.CategoriaId}"))">
+                           @onclick="@(() => _navigation!.NavigateTo($"categorias/editar/{categoria.Id}"))">
                             Editar
                         </a>
                     </td>
                     <td>
                         <a class="btn btn-danger"
-                           @onclick="@(() => ConfirmarExcluisaoTarefa(categoria.CategoriaId))">
+                           @onclick="@(() => ConfirmarExcluisaoTarefa(categoria.Id))">
                             Excluir
                         </a>
                     </td>

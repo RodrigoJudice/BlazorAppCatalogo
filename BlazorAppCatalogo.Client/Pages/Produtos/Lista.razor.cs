@@ -3,6 +3,7 @@ using BlazorAppCatalogo.Shared.Models;
 using Microsoft.AspNetCore.Components;
 using System.Text.Json;
 
+
 namespace BlazorAppCatalogo.Client.Pages.Produtos;
 
 public partial class Lista

@@ -25,7 +25,7 @@ namespace BlazorAppCatalogo.Server.Controller
         {
             var queryable = _context.Categorias.AsQueryable();
 
-            queryable = queryable.OrderBy(p => p.CategoriaId);
+            queryable = queryable.OrderBy(p => p.Id);
 
             if (!string.IsNullOrEmpty(nome))
             {
@@ -48,7 +48,7 @@ namespace BlazorAppCatalogo.Server.Controller
         [HttpGet("{id}", Name = "GetCategoria")]
         public async Task<ActionResult<Categoria>> Get(int id)
         {
-            return await _context.Categorias.AsNoTracking().FirstOrDefaultAsync(x => x.CategoriaId == id) ?? new Categoria();
+            return await _context.Categorias.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id) ?? new Categoria();
         }
 
         [HttpPost]
@@ -57,7 +57,7 @@ namespace BlazorAppCatalogo.Server.Controller
             _context.Add(categoria);
             await _context.SaveChangesAsync();
             return new CreatedAtRouteResult("GetCategoria",
-                new { id = categoria.CategoriaId }, categoria);
+                new { id = categoria.Id }, categoria);
         }
 
         [HttpPut]
@@ -71,7 +71,7 @@ namespace BlazorAppCatalogo.Server.Controller
         [HttpDelete("{id}")]
         public async Task<ActionResult<Categoria>> Delete(int id)
         {
-            var categoria = new Categoria { CategoriaId = id };
+            var categoria = new Categoria { Id = id };
             _context.Remove(categoria);
             await _context.SaveChangesAsync();
             return Ok();

@@ -4,7 +4,7 @@ namespace BlazorAppCatalogo.Shared.Models;
 
 public class Categoria
 {
-    public int CategoriaId { get; set; }
+    public int Id { get; set; }
 
     [Required(ErrorMessage = "O nome da categoria é obrigatório")]
     [MaxLength(100)]
