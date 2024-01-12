@@ -1,0 +1,84 @@
+﻿@page "/produtos"
+
+
+<h1>Produtos</h1>
+
+<div>
+    <a class="btn btn-success" href="produtos/novo">Adicionar Produto</a>
+</div>
+<br />
+
+<div style="display:flex">
+    <input type="text"
+           class="form-control mb-2 mr-sm-2"
+           style="width:300px"
+           placeholder="Filtrar pelo nome"
+           @bind="nomeFiltro">
+    <button type="submit" class="btn btn-primary mb-2 m-1" @onclick="Filtrar">Filtrar</button>
+    <button type="submit" class="btn btn-danger mb-2 m-1" @onclick="LimparFiltro">Limpar</button>
+</div>
+<br />
+
+
+@if (Produtos == null)
+{
+    <p><em>Loading...</em></p>
+}
+else if (Produtos.Count == 0)
+{
+    <p><em>Não existe Produtos cadastradas.</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Descrição</th>
+                <th>Preço</th>
+                <th>Editar</th>
+                <th>Excluir</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var Produto in Produtos)
+            {
+                <tr>
+                    <td>@Produto.Nome</td>
+                    <td>@Produto.Descricao</td>
+                    <td>@Produto.Preco</td>
+                    <td>
+                        <a class="btn btn-primary"
+                           @onclick="@(() => _navigation!.NavigateTo($"produtos/editar/{Produto.ProdutoId}"))">
+                            Editar
+                        </a>
+                    </td>
+                    <td>
+                        <a class="btn btn-danger"
+                           @onclick="@(() => ConfirmarExcluisaoTarefa(Produto.ProdutoId))">
+                            Excluir
+                        </a>
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+
+}
+<Confirma @ref="confirmaExclusao"
+          onCancela="@CancelaExclusao"
+          onConfirma="@ConfirmaExclusao">
+    <div>
+        <p>Confirma a exclusão da Produto?</p>
+    </div>
+
+</Confirma>
+
+<hr />
+<Paginacao QuantidadeTotalPaginas="QuantidadeTotalPaginas"
+           paginaAtual="paginaAtual"
+           Raio="2"
+           PaginaSelecionada="PaginaSelecionada">
+
+</Paginacao>

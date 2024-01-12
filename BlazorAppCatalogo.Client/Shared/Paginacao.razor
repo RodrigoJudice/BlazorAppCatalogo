@@ -1,0 +1,12 @@
+﻿<nav aria-label="Paginação">
+    <ul class="pagination justify-content-center">
+        @foreach (var link in links)
+        {
+            <li @onclick="@(() => PaginaSelecionadaLink(link))"
+                class="page-item  @(link.Ativo ? null : "disabled") @(link.Destacado ? "active" : null)">
+                <span class="page-link" href="#">@link.Texto</span>
+            </li>
+        }
+
+    </ul>
+</nav>

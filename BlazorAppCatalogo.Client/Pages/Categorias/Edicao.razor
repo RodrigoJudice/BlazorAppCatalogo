@@ -1,0 +1,33 @@
+﻿@*Nova tarefa*@
+@page "/categorias/novo"
+@*Editar tarefa*@
+@page "/categorias/editar/{Id:int}"
+
+<h3>Nova Categoria </h3>
+
+<EditForm Model="@categoria" OnValidSubmit="@SalvarCategoria">
+    <DataAnnotationsValidator />
+
+    <div class="form-group">
+        <label for="nome">Nome
+            <InputText id="txtCategoriaNome" @bind-Value="categoria.Nome" class="form-control" />
+            <ValidationMessage For="@(() => categoria.Nome)" />
+        </label>
+    </div>
+    <div class="form-group">
+        <label for="nome">Descrição</label>
+        <div>
+            <InputText id="descricao" class="form-control" @bind-Value="categoria.Descricao" />
+            <ValidationMessage For="@(() => categoria.Descricao)" />
+        </div>
+    </div>
+    <br />
+    <button type="submit" class="btn btn-success">Salvar</button>
+    <button class="btn btn-danger"
+            @onclick="@(() => navigation!.NavigateTo("categorias"))">
+        Cancelar
+    </button>
+
+
+</EditForm>
+

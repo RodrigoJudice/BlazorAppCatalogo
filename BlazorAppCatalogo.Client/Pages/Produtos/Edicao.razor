@@ -1,0 +1,54 @@
+﻿@*Nova tarefa*@
+@page "/produtos/novo"
+@*Editar tarefa*@
+@page "/produtos/editar/{Id:int}"
+
+<h3> Produto </h3>
+
+<EditForm Model="@Produto" OnValidSubmit="@SalvarProduto">
+    <DataAnnotationsValidator />
+
+    <div class="form-group">
+        <label for="nome">
+            Nome
+            <InputText id="txtProdutoNome" @bind-Value="Produto.Nome" class="form-control" />
+            <ValidationMessage For="@(() => Produto.Nome)" />
+        </label>
+    </div>
+    <div class="form-group">
+        <label for="nome">Descrição</label>
+        <div>
+            <InputText id="descricao" class="form-control" @bind-Value="Produto.Descricao" />
+            <ValidationMessage For="@(() => Produto.Descricao)" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="nome">Preço</label>
+        <div>
+            <InputNumber id="preco" class="form-control" @bind-Value="Produto.Preco" />
+            <ValidationMessage For="@(() => Produto.Descricao)" />
+        </div>
+    </div>
+    <div>
+        <label for="nome">Categoria</label>
+        <div>
+            <InputSelect id="categoria" class="form-control" @bind-Value="Produto.CategoriaId">
+                <option value="0">Selecione uma categoria</option>
+                @foreach (var categoria in Categorias)
+                {
+                    <option value="@categoria.CategoriaId">@categoria.Nome</option>
+                }
+            </InputSelect>
+            <ValidationMessage For="@(() => Produto.CategoriaId)" />
+        </div>
+    </div>
+    <br />
+    <button type="submit" class="btn btn-success">Salvar</button>
+    <button class="btn btn-danger"
+            @onclick="@(() => navigation!.NavigateTo("Produtos"))">
+        Cancelar
+    </button>
+
+
+</EditForm>
+
